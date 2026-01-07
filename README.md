@@ -1,6 +1,8 @@
 # CitySounds
 
-A Spring Boot application that connects cities with their music scenes using the Spotify API.
+A Original Java Spring Boot application that connects cities with their music scenes using the Spotify API and Globe.Gl Javascript UI Component.
+
+Total Project is still a WIP...
 
 ## Setup
 
@@ -24,7 +26,3 @@ A Spring Boot application that connects cities with their music scenes using the
    ```bash
    ./mvnw spring-boot:run
    ```
-
-## Features
-
-Work in progress... but will be very cool.
