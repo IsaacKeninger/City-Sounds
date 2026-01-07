@@ -143,7 +143,7 @@ fetch('/api/cities')
         console.log('Cities:', cities);
         citiesData = cities;
 
-        // Calculate distance between two cities
+        // Calculate distance between two cities (returns radians)
         const getDistance = (city1, city2) => {
             const lat1 = city1.latitude * Math.PI / 180;
             const lat2 = city2.latitude * Math.PI / 180;
@@ -158,6 +158,13 @@ fetch('/api/cities')
                      Math.sin(dLng/2) * Math.sin(dLng/2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
             return c;
+        };
+
+        // Check if arc would go through earth (angle > 90 degrees)
+        const wouldArcGoThroughEarth = (city1, city2) => {
+            const distance = getDistance(city1, city2);
+            const maxAngle = Math.PI * 0.5; // 90 degrees in radians
+            return distance > maxAngle;
         };
 
         // Group cities by music genre
@@ -183,8 +190,8 @@ fetch('/api/cities')
                     }))
                     .sort((a, b) => a.distance - b.distance);
 
-                // Connect to nearest same-genre city
-                if (distances.length > 0) {
+                // Connect to nearest same-genre city (skip if arc would go through earth)
+                if (distances.length > 0 && !wouldArcGoThroughEarth(city, distances[0].city)) {
                     arcsData.push({
                         startLat: city.latitude,
                         startLng: city.longitude,
@@ -207,8 +214,8 @@ fetch('/api/cities')
                 }))
                 .sort((a, b) => a.distance - b.distance);
 
-            // Connect to nearest different genre (cultural cross-pollination)
-            if (differentGenreCities.length > 0) {
+            // Connect to nearest different genre (skip if arc would go through earth)
+            if (differentGenreCities.length > 0 && !wouldArcGoThroughEarth(city, differentGenreCities[0].city)) {
                 arcsData.push({
                     startLat: city.latitude,
                     startLng: city.longitude,
