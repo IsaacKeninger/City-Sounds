@@ -106,12 +106,11 @@ public class SpotifyService { // This service encompasses interactions with the 
             CityArtist randomArtist = artists.get(random.nextInt(artists.size())); // This gets a random artist from the artists array, all of the artists in the db and puts into a cityArtists object
             System.out.println("Selected Artist: " + randomArtist.getArtistName());
 
-            String artistId = randomArtist.getSpotifyArtistId(); // gets their ID
             String artistName = randomArtist.getArtistName();
 
             // Find Artist ID, the call to return a top track
             System.out.println("Searching for " + artistName + "'s' top tracks via Spotify API.");
-            artistId = searchArtistId(artistName); // get their artists ID
+            String artistId = searchArtistId(artistName); // get their artists ID
             if (artistId == null) {
                 System.out.println("Could not find " +  artistName);
                 return null;
