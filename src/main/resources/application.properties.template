@@ -1,0 +1,23 @@
+# Spring Application Configuration Template
+# Copy this file to application.properties and fill in your actual values
+
+# Application Name
+spring.application.name=CitySounds
+
+# Database Configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/your_database_name
+spring.datasource.username=your_database_username
+spring.datasource.password=your_database_password
+
+# JPA/Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.format_sql=true
+
+# Spotify API Configuration
+spotify.client.id=your_spotify_client_id_here
+spotify.client.secret=your_spotify_client_secret_here
+
+# Server Configuration (optional)
+# server.port=8080
