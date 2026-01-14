@@ -1,8 +1,8 @@
-# CitySounds 
+# CitySounds
 
 CitySounds is an interactive 3D globe application that connects cities with their musical heritage and culture. By clicking on any of 50 major cities around the world, find curated tracks from artists who shaped that city's sound via  the Spotify web API, rendered in  3D using Globe.GL.
 
-**Live Status:** Work in Progress. Implementing Smooth Deployment...
+** [Live Demo](https://citysounds.onrender.com)** | ** Dockerized** | **Deployed on Render**
 
 ---
 
@@ -14,6 +14,8 @@ CitySounds is an interactive 3D globe application that connects cities with thei
   - [Frontend: Vanilla JavaScript + 3D Visualization](#frontend-vanilla-javascript--3d-visualization)
 - [What I Learned](#what-i-learned)
 - [Getting Started](#getting-started)
+  - [Local Development](#local-development)
+  - [Docker Deployment](#docker-deployment)
 - [Demo & Features](#demo--features)
 
 ---
@@ -739,6 +741,10 @@ CitySounds/
 ```
 
 ---
+
+## Docker Deployment
+
+This project is fully Dockerized for easy deployment to render.
 
 ## License
 
