@@ -736,8 +736,14 @@ CitySounds/
 │   │       └── static/
 │   │           ├── index.html
 │   │           └── app.js
+├── Dockerfile                      # Docker build configuration
+├── docker-compose.yml              # Local Docker deployment
+├── .dockerignore                   
+├── .env.example                    # Template for environment variables
+├── .gitignore                      # Prevents secrets in version control
 ├── pom.xml
-└── README.md
+├── README.md
+└── README-DOCKER.md                # Comprehensive Docker guide
 ```
 
 ---
