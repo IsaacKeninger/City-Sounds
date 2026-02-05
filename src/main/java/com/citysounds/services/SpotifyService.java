@@ -29,8 +29,6 @@ import com.google.gson.JsonObject;
             - GetAccessToken()
             - createAuthHeaders
             - 
-
-
 */
 
 @Service
@@ -60,7 +58,7 @@ public class SpotifyService {
         this.cityArtistRepository = cityArtistRepository;
     }
 
-    // Authentication for Spotify API Methods (getAccessToken(), createAuthHeaders())
+    // Authentication for Spotify API Methods (getAccessToken())
     private String getAccessToken() {
         long currentTime = System.currentTimeMillis();
 
@@ -98,11 +96,6 @@ public class SpotifyService {
         tokenExpirationTime = currentTime + ((expiresIn - 300) * 1000L);
 
         return cachedAccessToken;
-    }
-    private HttpHeaders createAuthHeaders() { //boring authentication stuff
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + getAccessToken());
-        return headers;
     }
 
     // Primary Method (getCuratedCityTrack())
@@ -144,6 +137,11 @@ public class SpotifyService {
         }
     }
 
+    private HttpHeaders createAuthHeaders() { //boring authentication stuff
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + getAccessToken());
+        return headers;
+    }
     // Helper Methods (searchArtistID(), getArtistTopTrack())
     private String searchArtistId(String artistName) {
         try {
