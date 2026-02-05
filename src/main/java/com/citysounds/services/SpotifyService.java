@@ -1,5 +1,6 @@
 package com.citysounds.services;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -14,10 +15,12 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.citysounds.models.CityArtist;
 import com.citysounds.repository.CityArtistRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
 
 /*
     This is kind of a lot to break down but i'll break it down
@@ -27,8 +30,11 @@ import com.google.gson.JsonObject;
     Methods: 
         Spotify Authentication Methods
             - GetAccessToken()
-            - createAuthHeaders
-            - 
+            - createAuthHeaders()
+        Service-Related Methods:
+            - getCuratedCityTrack()
+            - searchArtistId()
+            - getArtistTopTrack()
 */
 
 @Service
