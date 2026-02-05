@@ -1,6 +1,5 @@
 package com.citysounds.services;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -15,18 +14,32 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.citysounds.models.CityArtist;
 import com.citysounds.repository.CityArtistRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-@Service
-public class SpotifyService { // This service encompasses interactions with the spotify api, primarily returning a top track of an artist in a country
+/*
+    This is kind of a lot to break down but i'll break it down
 
+    SpotifyService: The primary service for accessing the spotify API, Get an Artist, and Get an Artists Top Track (or one of)
+
+    Methods: 
+        Spotify Authentication Methods
+            - GetAccessToken()
+            - createAuthHeaders
+            - 
+
+
+*/
+
+@Service
+public class SpotifyService { 
+
+    // Dependency Injections (ClientId, clientSecret; from application.properties)
     @Value("${spotify.client-id}")
     private String clientId;
-
+    
     @Value("${spotify.client-secret}")
     private String clientSecret;
 
@@ -42,11 +55,12 @@ public class SpotifyService { // This service encompasses interactions with the 
     private String cachedAccessToken = null;
     private long tokenExpirationTime = 0;
 
+    // Constructor (SpotifyService(Parameter: cityArtistRepository))
     public SpotifyService(CityArtistRepository cityArtistRepository) {
         this.cityArtistRepository = cityArtistRepository;
     }
 
-    // gets an access token for authentication
+    // Authentication for Spotify API Methods (getAccessToken(), createAuthHeaders())
     private String getAccessToken() {
         long currentTime = System.currentTimeMillis();
 
@@ -85,8 +99,13 @@ public class SpotifyService { // This service encompasses interactions with the 
 
         return cachedAccessToken;
     }
+    private HttpHeaders createAuthHeaders() { //boring authentication stuff
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + getAccessToken());
+        return headers;
+    }
 
-    // get a curated city track from postgres database. randomly select an artist and get spotify, return top track
+    // Primary Method (getCuratedCityTrack())
     public String getCuratedCityTrack(Long cityId, String countryCode) {
         try {
             System.out.println("Looking for artists for city ID: " + cityId);
@@ -125,13 +144,8 @@ public class SpotifyService { // This service encompasses interactions with the 
         }
     }
 
-    private HttpHeaders createAuthHeaders() { //boring authentication stuff
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "Bearer " + getAccessToken());
-        return headers;
-    }
-
-    private String searchArtistId(String artistName) { // This function gets the artists spotify ID by calling the spotify API with their name.
+    // Helper Methods (searchArtistID(), getArtistTopTrack())
+    private String searchArtistId(String artistName) {
         try {
             String url = SEARCH_URL + "?q=" + artistName + "&type=artist&limit=1"; // create URL for spotify api, only top result
             HttpEntity<String> entity = new HttpEntity<>(createAuthHeaders()); // set up auth headers
@@ -159,8 +173,8 @@ public class SpotifyService { // This service encompasses interactions with the 
             return null;
         }
     }
-
     private String getArtistTopTrack(String artistId, String countryCode) {
+
         try {
             String market = (countryCode != null && !countryCode.isEmpty()) ? countryCode : "US"; // if artist has no coutnrycode, juse use US market, else use their actual one.
             String url = String.format(ARTIST_TOP_TRACKS_URL, artistId) + "?market=" + market; // create url for spotify api
@@ -189,4 +203,5 @@ public class SpotifyService { // This service encompasses interactions with the 
             return null;
         }
     }
+
 }

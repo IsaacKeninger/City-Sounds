@@ -5,7 +5,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-// This defines what a "City" is.
+/* 
+THIS IS THE PRIMARY MODEL TO DEFINE A CITY. Basically just a table in sql but in code
+Columns -> id, country, countryCode(eg. "US", "UK"), Latitude, Longitude, musicGenre
+*/
+
 
 @Entity
 @Table(name = "cities")
@@ -14,18 +18,14 @@ public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private String country;
-
     private String countryCode;
-
     private Double latitude;
     private Double longitude;
-
     private String musicGenre;
 
+    // Getters & Setters
     public Long getId() {
         return id;
     }

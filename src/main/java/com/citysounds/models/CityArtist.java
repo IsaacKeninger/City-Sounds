@@ -7,6 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+/* 
+THIS IS THE PRIMARY MODEL TO DEFINE A SELECTED ARTIST FOR A CITY. Basically just a table in sql but in code.
+Columns -> city_id, artist_name, spotify_artist_id (Custom spotify_api_id)
+*/
+
 @Entity
 @Table(name = "city_artists")
 public class CityArtist {
@@ -24,6 +29,7 @@ public class CityArtist {
     @Column(name = "spotify_artist_id")
     private String spotifyArtistId;
 
+    // Getters & Setters
     public Long getId() {
         return id;
     }

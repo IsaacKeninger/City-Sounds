@@ -12,14 +12,25 @@ import com.citysounds.repository.CityRepository;
 import com.citysounds.services.SpotifyService;
 
 
-// This is the primary RESTAPI for the cities
+// This is the primary RESTAPI for citySounds
+/*
+REPOSITORY -> cityRepository
+SERVICE -> SpotifyService
+ENDPOINTS -> 
+    /api/cities: Calls getAllCities()
+        - returns all city objects for initiazation of the cites on the globe
+    /api/cities/{id}: calls getCityviaID(parameter: id)
+        - When City is clicked on -> return city object
+    /api/cities{id}/music: calls GetMusicForCity(parameter: id)
+        - Fetches the music track using the spotify Service; else, return an error
+*/
+
 @RestController
 public class CityController {
 
     private final CityRepository cityRepository;
     private final SpotifyService spotifyService;
 
-    
     public CityController(CityRepository cityRepository, SpotifyService spotifyService){
         this.cityRepository = cityRepository;
         this.spotifyService = spotifyService;
@@ -37,6 +48,7 @@ public class CityController {
         return cityRepository.findById(id).orElse(null);
     }
 
+    // This fetches the music for the city once it is clicked on
     @GetMapping("/api/cities/{id}/music")
     public ResponseEntity<String> GetMusicForCity(@PathVariable Long id){
         City city = cityRepository.findById(id).orElse(null);
