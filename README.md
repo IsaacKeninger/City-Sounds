@@ -1,6 +1,6 @@
 # CitySounds
 
-CitySounds is an interactive 3D globe application that connects cities with their musical heritage and culture. By clicking on any of 50 major cities around the world, find curated tracks from artists who shaped that city's sound via  the Spotify web API, rendered in  3D using Globe.GL.
+CitySounds is an interactive 3D globe application that connects cities with their musical heritage and culture. By clicking on any of 50 major cities around the world, you will find curated tracks from artists who shaped that city's sound via  the Spotify web API, rendered in  3D using Globe.GL.
 
 ** [Live Demo](https://citysounds.onrender.com)** (The startup and responsiveness might take a couple of minutes as a result of Docker Free Plan...)
 ---
@@ -23,8 +23,8 @@ CitySounds is an interactive 3D globe application that connects cities with thei
 
 CitySounds is a full-stack Java Spring Boot application that visualizes the relationship between geography and music. The app displays a 3D interactive globe where each city is connected to others through intelligent musical relationships:
 
-- **Genre Connections** (red arcs): Cities sharing the same music genre, connected to their nearest neighbor
-- **Cross-Genre Connections** (blue arcs): Cities with different genres, showing musical diversity and cultural exchange
+- **Genre Connections** (red arcs): Cities sharing the same music genre; connect to their nearest neighbor
+- **Cross-Genre Connections** (blue arcs): Cities with different genres; show musical diversity and cultural exchange
 
 When you click a city, you get:
 - A Spotify track preview from a local artist
@@ -32,7 +32,7 @@ When you click a city, you get:
 - A list of connected cities you can explore
 - GPS coordinates
 
-This application combines data persistence, external API integration, 3D graphics, and RESTful architecture into one project.
+This application combines data persistence, external API integration, 3D Frontend Modules, and RESTful architecture into one project.
 
 ---
 
@@ -41,9 +41,9 @@ This application combines data persistence, external API integration, 3D graphic
 ### Backend
 - **Java 25**
 - **Spring Boot 4.0.1** - Application framework
-- **Spring Data JPA / Hibernate** - ORM for database interactions
-- **PostgreSQL** - Relational database
-- **Maven** - Build and dependency management
+- **Spring Data JPA / Hibernate** - ORM (Object Relational Mapping) for database interactions
+- **PostgreSQL** - Industry Standard Relational database
+- **Maven** - Build and dependency management manager
 - **Gson** - JSON parsing for Spotify API responses
 
 ### Frontend
@@ -56,7 +56,7 @@ This application combines data persistence, external API integration, 3D graphic
 
 ### External APIs
 - **Spotify Web API** - Artist search and track retrieval
-
+  
 ---
 
 ## Architecture Deep Dive
@@ -73,7 +73,7 @@ The backend is built with Spring Boot and follows a clean, layered architecture.
 
 #### **Models (Entities)**
 
-The models represent the database schema and map directly to PostgreSQL tables via JPA annotations.
+The models represent the database schema and map directly to PostgreSQL tables via JPA annotations (such as @Entity, @ID, etc....)
 
 **[City.java](src/main/java/com/citysounds/models/City.java)**
 ```java
@@ -112,7 +112,7 @@ public class CityArtist {
 }
 ```
 
-**Purpose:** Maps artists to their cities. Each city has 5-6 artists, totaling ~300 artist records. The `spotifyArtistId` enables direct lookups in Spotify's catalog.
+**Purpose:** Maps artists to their cities. Each city has 4-6 artists. The `spotifyArtistId` enables direct lookups in Spotify's catalog.
 
 ---
 
@@ -145,12 +145,11 @@ public interface CityArtistRepository extends JpaRepository<CityArtist, Long> {
 **Custom Method:**
 - `findByCityId(Long cityId)` - Returns all artists associated with a specific city. This is a derived query method—Spring automatically generates the SQL based on the method name.
 
-
 ---
 
 #### **Services (Business Logic Layer)**
 
-Services contain the core business logic and handle interactions with external APIs. They're where the "intelligence" of the application lives.
+Services contain the core business logic and handle interactions with external APIs. The "intelligence" of the application is here.
 
 **[SpotifyService.java](src/main/java/com/citysounds/services/SpotifyService.java)**
 
@@ -201,7 +200,7 @@ private String getAccessToken() {
 }
 ```
 
-**Why caching matters:** Without caching, we'd make an auth request for every single track fetch. That's wasteful and could hit rate limits. By caching, we reduce API calls dramatically...
+**Why caching matters:** Without caching, we'd make an auth request for every single track fetch and could hit rate limits. By caching, API calls reduce alot...
 
 ---
 
@@ -420,7 +419,7 @@ function generateArcs(cities) {
 **The Algorithm:**
 - For each city, find its nearest neighbor with the **same** genre → red arc
 - Find its nearest neighbor with a **different** genre → blue arc
-- Prevents arcs that would pass through Earth (only connects cities < 90° apart)
+- Prevents arcs that would pass through Earth 
 
 **Result:** You get clusters of similar genres (e.g., Hip Hop cities connected in red) while also seeing cross-cultural influences (blue arcs between Hip Hop and Jazz, or K-Pop and J-Pop).
 
@@ -590,7 +589,7 @@ Building CitySounds taught me a ton about full-stack development, API integratio
 
 ---
 
-## Getting Started (Working on creating a more useable deployment)
+## Getting Started to run locally/ by yourself (else it is running on render.com under the description of the repository)
 
 ### **Prerequisites**
 - **Java 17+** (project uses Java 25)
